@@ -10,7 +10,7 @@ type Contact = {
 };
 
 export default function Contacts() {
-  const [contacts, setContacts] = useState<Contact[]>([]);
+    const [contacts, setContacts] = useState<Contact[]>([]);
 
   useEffect(() => {
     fetch('/api/contacts')
@@ -31,4 +31,5 @@ export default function Contacts() {
       </ul>
     </div>
   );
+
 }
