@@ -23,7 +23,7 @@ const ContactSidebar = () => {
 
   return (
     <div style={styles.sidebar}>
-      <h1 style={styles.title}>Contact List</h1>
+      <h1 style={styles.title}>Nav</h1>
       <div style={styles.scrollContainer}>
         <ul style={styles.list}>
           {contacts.map(contact => (

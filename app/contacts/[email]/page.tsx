@@ -1,5 +1,5 @@
 'use client';
-import { useSearchParams } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 // Define the Contact type
@@ -11,21 +11,33 @@ type Contact = {
 };
 
 const ContactPage: React.FC = () => {
-  const searchParams = useSearchParams();
-  const email = searchParams.get('email');
+  const params = useParams();
+  const email = decodeURIComponent(params.email as string);
   const [contact, setContact] = useState<Contact | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (email) {
       fetch(`/api/contacts/${email}`)
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok ' + error);
+          }
+          return response.json();
+        })
         .then((data: Contact) => setContact(data))
-        .catch(error => console.error('Error fetching contact:', error));
+        .catch(error => setError(error.message));
     }
   }, [email]);
 
+  if (error) {
+    return <div>Error: {error}
+      <h1 style={{color: 'darkblue'}}>{email}</h1>
+    </div>;
+  }
+
   if (!contact) {
-    return <div>Loading...${email}</div>;
+    return <div>Loading...</div>;
   }
 
   return (
