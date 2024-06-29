@@ -1,6 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import {setEmail} from '@/app/DynamicRouted4/page';
 
 // Define the Contact type
 type Contact = {
@@ -23,7 +24,7 @@ const ContactSidebar = () => {
 
   return (
     <div style={styles.sidebar}>
-      <h1 style={styles.title}>Nav</h1>
+      <h1 style={styles.title}>NavBar</h1>
       <div style={styles.scrollContainer}>
         <ul style={styles.list}>
           {contacts.map(contact => (
@@ -46,6 +47,7 @@ const styles = {
   },
   title: {
     marginBottom: '10px',
+    color: 'darkBlue'
   },
   scrollContainer: {
     height: 'calc(100vh - 50px)', // Adjust based on the title height
