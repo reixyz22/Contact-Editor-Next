@@ -28,9 +28,9 @@ const ContactSidebar = () => {
       <div style={styles.scrollContainer}>
         <ul style={styles.list}>
           {contacts.map(contact => (
-            <li key={contact.id} style={styles.listItem} onClick={() => router.push(`/contacts/${contact.email}`)}>
-              {contact.name}
-            </li>
+              <li key={contact.id} style={styles.listItem} onClick={() => setEmail(contact.email)}>
+                {contact.name}
+              </li>
           ))}
         </ul>
       </div>

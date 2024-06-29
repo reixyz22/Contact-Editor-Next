@@ -1,11 +1,12 @@
 import React from 'react';
 import ContactPage from '@/app/contacts/[email]/page';
 
-const emails: string[] = ["%","%","%","%"];
+const emails: string[] = ["%","%","%","V@chiwae.com"];
 export function setEmail(email: string) {
   for (let i = 0; i < emails.length; i++) {
     if (emails[i] === "%") {
       emails[i] = email;
+      console.log(emails[i])
       break; // Stop the loop after setting the email
     }
   }
