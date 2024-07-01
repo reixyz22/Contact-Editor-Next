@@ -19,11 +19,6 @@ const ContactPage: React.FC<ContactPageProps> = ({ emailProp }) => {
   const params = useParams();
   const emailFromParams = decodeURIComponent(params.email as string); // Decode the email parameter from URL
   const email = emailProp || emailFromParams; // Use prop email if available, otherwise use URL parameter
-  if (email === "%"){
-    return <div><h1 style={{color: 'darkblue'}}>X Waiting</h1></div>
-  }
-
-
   const [contact, setContact] = useState<Contact | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -47,6 +42,10 @@ const ContactPage: React.FC<ContactPageProps> = ({ emailProp }) => {
         });
     }
   }, [email]); // Depend on email, ensuring it re-runs the effect if the email prop changes
+
+  if (email === "%"){
+    return <div><h1 style={{color: 'darkblue'}}>X Waiting</h1></div>
+  }
 
   if (error) {
     return <div>Error: {error}.
