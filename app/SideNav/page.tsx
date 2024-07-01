@@ -24,7 +24,7 @@ const ContactSidebar = () => {
 
   return (
     <div style={styles.sidebar}>
-      <h1 style={styles.title}>NavBar</h1>
+      <h1 style={styles.title}>Selection Bar</h1>
       <div style={styles.scrollContainer}>
         <ul style={styles.list}>
           {contacts.map(contact => (

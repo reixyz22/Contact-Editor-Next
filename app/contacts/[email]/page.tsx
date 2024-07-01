@@ -22,26 +22,26 @@ const ContactPage: React.FC<ContactPageProps> = ({ emailProp }) => {
   const [contact, setContact] = useState<Contact | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (email) {
-      console.log('Fetching contact for email:', email); // Debugging: Log email before fetching
-      fetch(`/api/contacts/${email}`)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok ' + error +' email ' + email);
-          }
-          return response.json();
-        })
-        .then((data: Contact) => {
-          console.log('Fetched contact data:', data); // Debugging: Log fetched data
-          setContact(data);
-        })
-        .catch(error => {
-          console.error('Fetch error:', error); // Debugging: Log fetch error
-          setError(error.message);
-        });
-    }
-  }, [email]); // Depend on email, ensuring it re-runs the effect if the email prop changes
+ useEffect(() => {
+  console.log('Current email:', email); // This will show what email is being used for fetching
+  if (email && email !== "%") {
+    fetch(`/api/contacts/${email}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Network response was not ok. Email: ${email}`);
+        }
+        return response.json();
+      })
+      .then((data: Contact) => {
+        console.log('Fetched contact data:', data); // Debugging: Log fetched data
+        setContact(data);
+      })
+      .catch(error => {
+        console.error('Fetch error:', error);
+        setError(`Fetch error: ${error.message}`);
+      });
+  }
+}, [email]); // Make sure this effect runs whenever email changes
 
   if (email === "%"){
     return <div><h1 style={{color: 'darkblue'}}>X Waiting</h1></div>
@@ -64,6 +64,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ emailProp }) => {
         <p><strong>Name:</strong> {contact.name}</p>
         <p><strong>Email:</strong> {contact.email}</p>
         <p><strong>Phone:</strong> {contact.phone}</p>
+        <button onClick={() => clearEmail(contact.email)}>clear {contact.name}</button>
       </div>
     </div>
   );
