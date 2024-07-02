@@ -1,7 +1,8 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-// import {setEmail} from '@/app/DynamicRouted/page';
+import { useDispatch } from 'react-redux';
+import { setEmail } from '../store';
 
 // Define the Contact type
 type Contact = {
@@ -22,13 +23,19 @@ const ContactSidebar = () => {
       .catch(error => console.error('Error fetching contacts:', error));
   }, []);
 
+  const dispatch = useDispatch();
+
+  const handleSetEmail = (email: string) => {
+    dispatch(setEmail(email));
+  };
+
   return (
     <div style={styles.sidebar}>
       <h1 style={styles.title}>Selection Bar</h1>
       <div style={styles.scrollContainer}>
         <ul style={styles.list}>
           {contacts.map(contact => (
-              <li key={contact.id} style={styles.listItem} /* onClick={() => setEmail(contact.email)}*/>
+              <li key={contact.id} style={styles.listItem} onClick={() => handleSetEmail(contact.email)}>
                 {contact.name}
               </li>
           ))}
