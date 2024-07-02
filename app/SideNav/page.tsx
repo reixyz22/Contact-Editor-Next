@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import {setEmail} from '@/app/DynamicRouted4/page';
+// import {setEmail} from '@/app/DynamicRouted/page';
 
 // Define the Contact type
 type Contact = {
@@ -28,7 +28,7 @@ const ContactSidebar = () => {
       <div style={styles.scrollContainer}>
         <ul style={styles.list}>
           {contacts.map(contact => (
-              <li key={contact.id} style={styles.listItem} onClick={() => setEmail(contact.email)}>
+              <li key={contact.id} style={styles.listItem} /* onClick={() => setEmail(contact.email)}*/>
                 {contact.name}
               </li>
           ))}

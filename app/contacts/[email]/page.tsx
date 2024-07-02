@@ -1,7 +1,7 @@
 'use client';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import {clearEmail} from '@/app/DynamicRouted4/page';
+// import {clearEmail} from '@/app/DynamicRouted/page';
 
 // Define the Contact type
 type Contact = {
@@ -64,7 +64,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ emailProp }) => {
         <p><strong>Name:</strong> {contact.name}</p>
         <p><strong>Email:</strong> {contact.email}</p>
         <p><strong>Phone:</strong> {contact.phone}</p>
-        <button onClick={() => clearEmail(contact.email)}>clear {contact.name}</button>
+         <button /* onClick={() => clearEmail(contact.email)}*/ >clear {contact.name} </button>
       </div>
     </div>
   );
