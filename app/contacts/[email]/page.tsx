@@ -2,7 +2,7 @@
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {clearEmail} from '@/app/store';
+import {clearEmail, toggleHide} from '@/app/store';
 
 // Define the Contact type
 type Contact = {
@@ -13,19 +13,22 @@ type Contact = {
 };
 
 type ContactPageProps = {
-  emailProp?: string; // Prop to accept email optionally
+  emailProp?: string;
+  editProp: boolean;
 };
 
-const ContactPage: React.FC<ContactPageProps> = ({ emailProp }) => {
+const ContactPage: React.FC<ContactPageProps> = ({ emailProp, editProp }) => {
+
   //these lines handle getting email prop, either as an arg from dyna or from the url
   const params = useParams();
   const emailFromParams = decodeURIComponent(params.email as string); // Decode the email parameter from URL
   const email = emailProp || emailFromParams; // Use prop email if available, otherwise use URL parameter
+
   //now that you have your email you can set these up ahead of your api call
   const [contact, setContact] = useState<Contact | null>(null);
   const [error, setError] = useState<string | null>(null);
 
- useEffect(() => {
+ useEffect(() => { //api call starts here
   console.log('Current email:', email); // This will show what email is being used for fetching
   if (email && email !== "%") {
     fetch(`/api/contacts/${email}`)
@@ -45,38 +48,39 @@ const ContactPage: React.FC<ContactPageProps> = ({ emailProp }) => {
       });
   }
 }, [email]); // Make sure this effect runs whenever email changes
-  // you'll need these two things to use our redux state, dispatch and handleClearEmail
+
+  // you'll need these three things to use our redux state, dispatch handle_clearEmail handle_toggleHide
   const dispatch = useDispatch();
-  const handleClearEmail = (email: string) => {
+  const handle_clearEmail = (email: string) => {
       dispatch(clearEmail(email));
   }
-
-  //error handles down to line 69
-  if (email === "%"){
-    return <div><h1 style={{color: 'darkblue'}}>X Waiting</h1></div>
+  const handle_toggleHide = (email: string) => {
+      dispatch(toggleHide(email));
   }
 
-  if (error) {
-    return <div>Error: {error}.
-        <h1 style={{color: 'darkblue'}}>{email}</h1>
-      </div>
-  }
+  //error handles down to line 73
+  if (email === "%") return <h1 style={{color: 'darkblue'}}> 📝 </h1>
+
+
+  if (error) return <div>
+      Error: {error}.<h1 style={{color: 'darkblue'}}>{email}</h1>
+  </div>
+
 
   if (!contact) {
-    return <div>Loading...</div>;
+    return <div>Loading...</div>
   }
 
-  return (
-    <div>
-      <h1 style={{ color: 'darkblue' }}>{email}</h1>
+  if (!editProp)return (
       <div>
-        <p><strong>Name:</strong> {contact.name}</p>
-        <p><strong>Email:</strong> {contact.email}</p>
-        <p><strong>Phone:</strong> {contact.phone}</p>
-         <button onClick={() => handleClearEmail(contact.email)}>clear {contact.name} </button>
+          <h1 style={{color: 'darkblue'}}>{email}</h1>
+          <p><strong>Name:</strong> {contact.name}</p>
+          <p><strong>Email:</strong> {contact.email}</p>
+          <p><strong>Phone:</strong> {contact.phone}</p>
+          <button onClick={() => handle_clearEmail(contact.email)}>📓 Reset</button>
+          <button onClick={() => handle_toggleHide(contact.email)}>🖋 Edit</button>
       </div>
-    </div>
-  );
+  )
 };
 
 export default ContactPage;

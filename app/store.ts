@@ -1,40 +1,56 @@
 import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface EmailState {
-  emails: string[];
+  emailInx: { email: string; edit: boolean }[];
 }
 
-//this array stores email strings that tell dynamicRouted/page.tsx what to point to. % is a placeholder
 const initialState: EmailState = {
-  emails: ["%", "%", "%", "%"]
+  emailInx: [
+    { email: "%", edit: false },
+    { email: "%", edit: false },
+    { email: "%", edit: false },
+    { email: "%", edit: false }
+  ]
 };
 
 const emailIndexFunctions = createSlice({
   name: 'email',
   initialState,
   reducers: {
-    setEmail: (state, action: PayloadAction<string>) => {
-      const email = action.payload;
-      const index = state.emails.findIndex(e => e === "%");
-      if (index !== -1) {
-        state.emails[index] = email;
+      setEmail: (state, action: PayloadAction<string>) => {
+        const email = action.payload;
+        for(let i = 0; i < 4; i++){
+          if(state.emailInx[i].email === "%"){
+            state.emailInx[i].email = email;
+            break;
+          }
+        }
+      },
+      clearEmail: (state, action: PayloadAction<string>) => {
+        const email = action.payload;
+        for(let i = 0; i < 4; i++){
+          if(state.emailInx[i].email === email){
+            state.emailInx[i].email = "%";
+            break;
+          }
+        }
+      },
+      toggleHide: (state, action: PayloadAction<string>) => {
+        const email = action.payload;
+        for(let i = 0; i < 4; i++){
+          if(state.emailInx[i].email === email){
+            state.emailInx[i].edit = !state.emailInx[i].edit;
+          }
+        }
       }
-    },
-    clearEmail: (state, action: PayloadAction<string>) => {
-      const email = action.payload;
-      const index = state.emails.findIndex(e => e === email);
-      if (index !== -1) {
-        state.emails[index] = "%";
-      }
-    }
   }
 });
 
-export const { setEmail, clearEmail } = emailIndexFunctions.actions;
+export const { setEmail, clearEmail, toggleHide} = emailIndexFunctions.actions;
 
 export const store = configureStore({
   reducer: {
-    email: emailIndexFunctions.reducer
+    dynaEInx: emailIndexFunctions.reducer
   }
 });
 
