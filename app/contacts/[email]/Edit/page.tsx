@@ -11,40 +11,40 @@ const EditPage: React.FC<{ emailProp?: string; editProp?: boolean }> = ({ emailP
     const dispatch = useDispatch();
     
     // State to manage the form inputs
-    const [newName, setNewName] = useState('');
-    const [newEmail, setNewEmail] = useState('');
-    const [newPhone, setNewPhone] = useState('');
+    const [newName, setNewName] = useState<string>('');
+    const [newEmail, setNewEmail] = useState<string>('');
+    const [newPhone, setNewPhone] = useState<string>('');
 
     const handleToggleHide = (email: string) => {
         dispatch(toggleHide(email));
     };
 
-     const handleSave = async () => {
+    const handleSave = async () => {
         const response = await fetch('/api/contacts/updateContact', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                currentEmail: email, // Using the initial email as the identifier for the update
-                newName: newName || undefined,
-                newEmail: newEmail || undefined,
-                newPhone: newPhone || undefined
+                currentEmail: emailProp, // Assuming emailProp is the identifier
+                newName,
+                newEmail,
+                newPhone
             }),
         });
+
         if (response.ok) {
             console.log('Contact updated successfully');
-            // Optionally update the local state or re-fetch the contact data
-            handleToggleHide(newEmail);
+            handleToggleHide(email); //hide the edit menu automatically
         } else {
             console.error('Failed to update contact');
         }
     };
+
 
     if (!editProp) return <div></div>; // Return nothing if edit mode is off
 
     return (
         <div>
             <h1 style={{color: 'darkred'}}>{email}</h1>
-            {/* Input fields for editing contact details */}
             <input
                 type="text"
                 value={newName}
