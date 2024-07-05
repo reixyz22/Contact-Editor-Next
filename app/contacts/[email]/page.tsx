@@ -14,7 +14,7 @@ type Contact = {
 
 type ContactPageProps = {
   emailProp?: string;
-  editProp: boolean;
+  editProp: boolean; //tells 'dynamicRouted' if this should be the edit view or the normal view if edit = true {is edit}
 };
 
 const ContactPage: React.FC<ContactPageProps> = ({ emailProp, editProp }) => {
@@ -29,7 +29,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ emailProp, editProp }) => {
   const [error, setError] = useState<string | null>(null);
 
  useEffect(() => { //api call starts here
-  console.log('Current email:', email); // This will show what email is being used for fetching
+  console.log('Current email:', email); // This will log what email is being used for fetching; useful to debug
   if (email && email !== "%") {
     fetch(`/api/contacts/${email}`)
       .then(response => {
@@ -58,17 +58,14 @@ const ContactPage: React.FC<ContactPageProps> = ({ emailProp, editProp }) => {
       dispatch(toggleHide(email));
   }
 
-  //error handles down to line 73
-  if (email === "%") return <h1 style={{color: 'darkblue'}}> 📝 </h1>
-
+  if (email === "%") return <h1 style={{color: 'darkblue'}}> 📝 </h1> //default screen seen on homepage + after resets
 
   if (error) return <div>
       Error: {error}.<h1 style={{color: 'darkblue'}}>{email}</h1>
   </div>
 
-
   if (!contact) {
-    return <div>Loading...</div>
+    return <div>Loading Contact...</div>
   }
 
   if (!editProp)return (
