@@ -1,7 +1,15 @@
 import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+interface Contact {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+}
+
 interface EmailState {
   emailInx: { email: string; edit: boolean }[];
+  contacts: Contact[];
 }
 
 const initialState: EmailState = {
@@ -10,7 +18,8 @@ const initialState: EmailState = {
     { email: "%", edit: false },
     { email: "%", edit: false },
     { email: "%", edit: false }
-  ]
+  ],
+  contacts: []
 };
 
 const emailIndexFunctions = createSlice({
@@ -42,7 +51,7 @@ const emailIndexFunctions = createSlice({
             state.emailInx[i].edit = !state.emailInx[i].edit;
           }
         }
-      }
+      },
   }
 });
 

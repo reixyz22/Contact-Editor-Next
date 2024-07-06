@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 export async function GET(request: Request) {
   // Parse the URL and extract search parameters
   const path = new URL(request.url).pathname;
-  const email = path.split('/')[3];  // Adjust the index according to your actual URL structure
+  const email = path.split('/')[3];
 
   console.log('Email received for API request:', email);  // Debug to check what email is received
 

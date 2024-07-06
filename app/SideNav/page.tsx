@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
-import { setEmail } from '../store';
+import { RootState, setEmail } from '../store';
 
 // Define the Contact type
 type Contact = {
@@ -17,11 +17,20 @@ const ContactSidebar = () => {
   const router = useRouter();
 
   useEffect(() => {
-    fetch('/api/contacts')
-      .then(response => response.json())
-      .then(data => setContacts(data))
-      .catch(error => console.error('Error fetching contacts:', error));
-  }, []);
+      const fetchContacts = () => {
+              fetch('/api/contacts').then(response => response.json())
+              .then(data => {// Sort contacts by name alphabetically
+                const sortedData = data.sort((a: Contact, b: Contact) => a.name.localeCompare(b.name));
+                setContacts(sortedData);
+              })
+              .catch(error => console.error('Error fetching contacts:', error));
+      };
+
+      fetchContacts();  // Initial fetch
+      const intervalId = setInterval(fetchContacts, 10);  // Refresh every 10 ms (.1 second)
+
+      return () => clearInterval(intervalId);  // Cleanup on component unmount
+    }, []);
 
   const dispatch = useDispatch();
 

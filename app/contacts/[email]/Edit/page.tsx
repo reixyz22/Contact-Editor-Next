@@ -1,46 +1,52 @@
 'use client';
 import { useParams } from 'next/navigation';
 import React, { useState } from 'react';
-import { useDispatch } from "react-redux";
-import { toggleHide } from "@/app/store";
+import { useDispatch } from 'react-redux';
+import { toggleHide, updateContact } from '@/app/store'; // Ensure this import path matches your project structure
+
+interface Contact {
+    id: number;
+    name: string;
+    email: string;
+    phone: string;
+}
 
 const EditPage: React.FC<{ emailProp?: string; editProp?: boolean }> = ({ emailProp, editProp }) => {
     const params = useParams();
-    const emailFromParams = decodeURIComponent(params.email as string); // Decode the email parameter from URL
-    const email = emailProp || emailFromParams; // Use prop email if available, otherwise use URL parameter
+    const email = emailProp || decodeURIComponent(params.email as string);
     const dispatch = useDispatch();
-    
+
     // State to manage the form inputs
     const [newName, setNewName] = useState<string>('');
     const [newEmail, setNewEmail] = useState<string>('');
     const [newPhone, setNewPhone] = useState<string>('');
 
-    const handleToggleHide = (email: string) => {
-        dispatch(toggleHide(email));
-    };
-
     const handleSave = async () => {
-        const response = await fetch('/api/contacts/updateContact', {
+        const updateUrl = `/api/contacts/${email}/edit`;
+
+        const dataToSend = {
+            name: newName,
+            email: newEmail,
+            phone: newPhone,
+        };
+
+        const response = await fetch(updateUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                currentEmail: emailProp, // Assuming emailProp is the identifier
-                newName,
-                newEmail,
-                newPhone
-            }),
+            body: JSON.stringify(dataToSend),
         });
 
         if (response.ok) {
+            const updatedContactData: Contact = await response.json();
             console.log('Contact updated successfully');
-            handleToggleHide(email); //hide the edit menu automatically
+            dispatch(toggleHide(email)); //hide the edit interface
         } else {
-            console.error('Failed to update contact');
+            const errorData = await response.json();
+            console.error('Failed to update contact:', errorData.error);
         }
     };
 
-
-    if (!editProp) return <div></div>; // Return nothing if edit mode is off
+    if (!editProp) return <div/>; // Return nothing if edit mode is off
 
     return (
         <div>
@@ -67,7 +73,7 @@ const EditPage: React.FC<{ emailProp?: string; editProp?: boolean }> = ({ emailP
                 style={{display: 'block', margin: '10px 0'}}
             />
             <button onClick={handleSave}>💾 Save</button>
-            <button onClick={() => handleToggleHide(email)}>🔙 Back</button>
+            <button onClick={() => dispatch(toggleHide(email))}>🔙 Back</button>
         </div>
     );
 };
