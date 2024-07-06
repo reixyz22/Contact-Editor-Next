@@ -3,7 +3,7 @@ import React from 'react';
 import ContactPage from '@/app/contacts/[email]/page';
 import {useSelector } from 'react-redux';
 import { RootState } from '../store';
-import EditPage from "@/app/contacts/[email]/Edit/page";
+import EditPage from "@/app/contacts/[email]/edit/page";
 
 const Dyna: React.FC = () => {
     const emailInx = useSelector((state: RootState) => state.dynaEInx.emailInx);
