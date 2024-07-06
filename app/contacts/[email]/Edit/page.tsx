@@ -11,7 +11,12 @@ interface Contact {
     phone: string;
 }
 
-const EditPage: React.FC<{ emailProp?: string; editProp?: boolean }> = ({ emailProp, editProp }) => {
+type ContactPageProps = {
+  emailProp?: string;
+  editProp: boolean; //tells 'dynamicRouted' if this should be the edit view or the normal view if edit = true {is edit}
+};
+
+const EditPage: React.FC<ContactPageProps> = ({ emailProp, editProp }) => {
     const params = useParams();
     const email = emailProp || decodeURIComponent(params.email as string);
     const dispatch = useDispatch();
