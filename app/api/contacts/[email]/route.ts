@@ -8,7 +8,7 @@ export async function GET(request: Request) {
   const path = new URL(request.url).pathname;
   const email = path.split('/')[3];
 
-  console.log('Email received for API request:', email);  // Debug to check what email is received
+  //console.log('Email received for API request:', email);  // Debug to check what email is received
 
   // Check if the email parameter is present
   if (!email) {
@@ -21,7 +21,7 @@ export async function GET(request: Request) {
     const contact = await prisma.contact.findUnique({
       where: { email: email },
     });
-    console.log('Contact Query Result:', contact);  // Debug to see the database query result
+    //console.log('Contact Query Result:', contact);  // Debug to see the database query result
 
     // Check if the contact is found
     if (!contact) {

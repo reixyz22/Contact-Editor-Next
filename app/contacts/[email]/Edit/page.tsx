@@ -2,7 +2,7 @@
 import { useParams } from 'next/navigation';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { toggleHide, updateContact } from '@/app/store'; // Ensure this import path matches your project structure
+import { toggleHide } from '@/app/store'; // Ensure this import path matches your project structure
 
 interface Contact {
     id: number;

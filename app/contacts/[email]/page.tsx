@@ -31,21 +31,25 @@ const ContactPage: React.FC<ContactPageProps> = ({ emailProp, editProp }) => {
  useEffect(() => { //api call starts here
   console.log('Current email:', email); // This will log what email is being used for fetching; useful to debug
   if (email && email !== "%") {
-    fetch(`/api/contacts/${email}`)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`Network response was not ok. Email: ${email}`);
-        }
-        return response.json();
-      })
-      .then((data: Contact) => {
-        console.log('Fetched contact data:', data); // Debugging: Log fetched data
-        setContact(data);
-      })
-      .catch(error => {
-        console.error('Fetch error:', error);
-        setError(`Fetch error: ${error.message}`);
-      });
+      const fetchContact = () => {
+          fetch(`/api/contacts/${email}`)
+              .then(response => {
+                  if (!response.ok) {
+                      throw new Error(`Network response was not ok. Email: ${email}`);
+                  }
+                  return response.json();
+              })
+              .then((data: Contact) => {
+                  setContact(data);
+              })
+              .catch(error => {
+                  console.error('Fetch error:', error);
+                  setError(`Fetch error: ${error.message}`);
+              });
+      };
+      const intervalId = setInterval(fetchContact, 100);  // Refresh every 10 ms (.1 second), so we catch new edits
+
+      return () => clearInterval(intervalId);  // Cleanup on component unmount
   }
 }, [email]); // Make sure this effect runs whenever email changes
 
