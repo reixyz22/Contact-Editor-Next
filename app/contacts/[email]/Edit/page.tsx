@@ -47,10 +47,10 @@ const EditPage: React.FC<{ emailProp?: string; editProp?: boolean }> = ({ emailP
                 const errorData = await response.json();
                 console.error('Failed to update contact:', errorData.error);
         }
-        //if (email === "new" && response.ok){ //fix the display, so we can show your newly added contact right away
-        //        dispatch(clearEmail("new"));
-        //        dispatch(setEmail(newEmail));
-        //}
+        if (email === "new" && response.ok){ //fix the display, so we can show your newly added contact right away
+                dispatch(clearEmail("new"));
+                dispatch(setEmail(newEmail));
+        }
     };
 
     if (!editProp) return <div/>; // Return nothing if edit mode is off
