@@ -30,7 +30,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ emailProp, editProp }) => {
 
  useEffect(() => { //api call starts here
   console.log('Current email:', email); // This will log what email is being used for fetching; useful to debug
-  if (email && email !== "%") {
+  if (email && email !== "%" && email!=="new") {
       const fetchContact = () => {
           fetch(`/api/contacts/${email}`)
               .then(response => {
@@ -47,7 +47,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ emailProp, editProp }) => {
                   setError(`Fetch error: ${error.message}`);
               });
       };
-      const intervalId = setInterval(fetchContact, 100);  // Refresh every 10 ms (.1 second), so we catch new edits
+      const intervalId = setInterval(fetchContact, 100);  // Refresh every 100 ms (.1 second), so we catch new edits
 
       return () => clearInterval(intervalId);  // Cleanup on component unmount
   }
@@ -62,6 +62,8 @@ const ContactPage: React.FC<ContactPageProps> = ({ emailProp, editProp }) => {
       dispatch(toggleHide(email));
   }
 
+  if (editProp) return <div></div> //if email edit mode don't render this page at all
+
   if (email === "%") return <h1 style={{color: 'darkblue'}}> 📝 </h1> //default screen seen on homepage + after resets
 
   if (error) return <div>
@@ -72,7 +74,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ emailProp, editProp }) => {
     return <div>Loading Contact...</div>
   }
 
-  if (!editProp)return (
+  return (
       <div>
           <h1 style={{color: 'darkblue'}}>{email}</h1>
           <p><strong>Name:</strong> {contact.name}</p>

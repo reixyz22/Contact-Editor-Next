@@ -2,7 +2,7 @@
 import { useParams } from 'next/navigation';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { toggleHide } from '@/app/store'; // Ensure this import path matches your project structure
+import { toggleHide,clearEmail,setEmail } from '@/app/store'; // Ensure this import path matches your project structure
 
 interface Contact {
     id: number;
@@ -22,28 +22,35 @@ const EditPage: React.FC<{ emailProp?: string; editProp?: boolean }> = ({ emailP
     const [newPhone, setNewPhone] = useState<string>('');
 
     const handleSave = async () => {
-        const updateUrl = `/api/contacts/${email}/edit`;
 
+        let updateUrl = `/api/contacts/${email}/edit`; //edit contact API
+
+        if (email === "new"){ //add new contact API
+                updateUrl = `/api/contacts/add`;
+        }
         const dataToSend = {
-            name: newName,
-            email: newEmail,
-            phone: newPhone,
+                name: newName,
+                email: newEmail,
+                phone: newPhone,
         };
-
         const response = await fetch(updateUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(dataToSend),
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dataToSend),
         });
 
         if (response.ok) {
-            const updatedContactData: Contact = await response.json();
-            console.log('Contact updated successfully');
-            dispatch(toggleHide(email)); //hide the edit interface
+                const updatedContactData: Contact = await response.json();
+                console.log('Contact updated successfully');
+                dispatch(toggleHide(email)); //hide the edit interface
         } else {
-            const errorData = await response.json();
-            console.error('Failed to update contact:', errorData.error);
+                const errorData = await response.json();
+                console.error('Failed to update contact:', errorData.error);
         }
+        //if (email === "new" && response.ok){ //fix the display, so we can show your newly added contact right away
+        //        dispatch(clearEmail("new"));
+        //        dispatch(setEmail(newEmail));
+        //}
     };
 
     if (!editProp) return <div/>; // Return nothing if edit mode is off
