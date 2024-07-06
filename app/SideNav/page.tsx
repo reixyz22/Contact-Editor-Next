@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, {CSSProperties, useEffect, useState} from 'react';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import {RootState, setEmail, toggleHide} from '../store';
@@ -72,29 +72,30 @@ const ContactSidebar = () => {
  );
 }
 
-const styles = {
+const styles: { [key: string]: CSSProperties } = {
     sidebar: {
         width: '250px',
         height: '100vh',
-    backgroundColor: '#f0f0f0',
-    padding: '20px',
-  },
-  title: {
-    marginBottom: '10px',
-    color: 'darkBlue'
-  },
-  scrollContainer: {
-    height: 'calc(100vh - 50px)',
-  },
-  list: {
-    listStyleType: 'none',
-    padding: 0,
-  },
-  listItem: {
-    padding: '10px 0',
-    borderBottom: '1px solid #ddd',
-    cursor: 'pointer',
-  },
+        backgroundColor: '#f0f0f0',
+        padding: '20px',
+    },
+    title: {
+        marginBottom: '10px',
+        color: 'darkBlue'
+    },
+    scrollContainer: {
+        height: 'calc(100vh - 70px)' as const,  // Ensures the height is treated as a specific string
+        overflowY: 'auto' as 'auto',  // Ensures overflowY matches the expected string literal type
+    },
+    list: {
+        listStyleType: 'none',
+        padding: 0,
+    },
+    listItem: {
+        padding: '10px 0',
+        borderBottom: '1px solid #ddd',
+        cursor: 'pointer',
+    },
 };
 
 
