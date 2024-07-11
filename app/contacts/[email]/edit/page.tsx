@@ -21,7 +21,7 @@ const EditPage: React.FC<ContactPageProps> = ({ emailProp, editProp }) => {
     const email = emailProp || decodeURIComponent(params.email as string);
     const dispatch = useDispatch();
 
-    // State to manage the form inputs
+    // State to manage the form inputs Hey, I realize you haven't streamed in coming on 3 years but your twitch still says, Donate to encourage me. I wish that we could talk, but I realize you've decided not to. However, if you ever came back to stream one day that'd be really cool.
     const [newName, setNewName] = useState<string>('');
     const [newEmail, setNewEmail] = useState<string>('');
     const [newPhone, setNewPhone] = useState<string>('');
