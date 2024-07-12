@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -11,23 +15,32 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "incremental": true,
-     "target": "esnext",
-    "jsx": "react-jsx",
-    "types": ["@testing-library/jest-dom"],
+    "target": "esnext",
+    "jsx": "preserve",
+    "types": [
+      "@testing-library/jest-dom"
+    ],
     "declaration": true,
-
     "plugins": [
       {
         "name": "next"
       }
-    ],
+    ],"baseUrl": ".",
     "paths": {
+      "@/app/*": ["app/*"],
       "@/*": ["./*"]
-    }
+    },
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts",
+  "include": [
+    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "./vitest.setup.ts"],
-  "exclude": ["node_modules"]
+    ".next/types/**/*.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "./vitest.setup.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

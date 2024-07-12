@@ -1,11 +1,11 @@
 'use client';
 import React from 'react';
-import ContactPage from '@/app/contacts/[email]/page';
+import ContactPage from '../contacts/[email]/page';
 import {useSelector } from 'react-redux';
 import { RootState } from '../store';
-import EditPage from "@/app/contacts/[email]/edit/page";
+import EditPage from "../contacts/[email]/edit/page";
 
-const Dyna: React.FC = () => {
+const Dyna = () => {
     const emailInx = useSelector((state: RootState) => state.dynaEInx.emailInx);
     return (
       <div style={{display: 'table', width: '100%', borderSpacing: '10px'}}>

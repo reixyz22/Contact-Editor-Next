@@ -2,7 +2,7 @@
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {clearEmail, toggleHide} from '@/app/store';
+import {clearEmail, toggleHide} from '../../store';
 
 // Define the Contact type
 type Contact = {

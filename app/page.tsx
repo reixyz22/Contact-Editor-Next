@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import Dyna from '@/app/DynamicRouted/page';
+import Dyna from './DynamicRouted/page';
 import ContactSidebarNav from './SideNav/page';
 
 const Page: React.FC = () => {

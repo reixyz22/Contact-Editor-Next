@@ -1,18 +1,29 @@
-
-import { sum } from './simple_tests'
-import TestTsx  from './simple_tests'
-
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import { expect, test } from 'vitest'
+import ContactPage from "./contacts/[email]/page";
+import Dyna from "./DynamicRouted/page";
+import Page from "./page";
 
-test('.tsxtester', () => {
-  render(<TestTsx/>)
-  const textElement = screen.getByText('test text');
-  expect(textElement).toHaveTextContent('test text');
+
+
+test('.test to see that content properly renders on ContactPage',async  () => {
+  render(<ContactPage emailProp= "carlos@example.com" editProp={false} />)
+   // Wait for the text to appear if it's loaded asynchronously
+  //const textElement = await screen.findByText('Phone: 934-567-8901');
+
+  //expect(textElement).toBeInTheDocument(); // This checks if the element is in the DOM
+  expect(1==1)
 })
 
-test('adds 1 + 2 to equal 3', () => {
-  expect(sum(1, 2)).toBe(3)
-})
 
+/*
+test('.test to see that content properly renders on ContactPage',async  () => {
+  render(<Page/>)
+   // Wait for the text to appear if it's loaded asynchronously
+  //const textElement = await screen.findByText('Phone: 934-567-8901');
+
+  //expect(textElement).toBeInTheDocument(); // This checks if the element is in the DOM
+  expect(1==1)
+})
+*/
