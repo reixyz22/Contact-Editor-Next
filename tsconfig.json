@@ -17,25 +17,19 @@
     "incremental": true,
     "target": "esnext",
     "jsx": "preserve",
-    "types": [
-      "@testing-library/jest-dom"
-    ],
+    "types": ["@testing-library/jest-dom"],
+    "forceConsistentCasingInFileNames": true,
     "declaration": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
+    "plugins": [{"name": "next"}
     ],"baseUrl": ".",
     "paths": {
       "@/app/*": ["app/*"],
       "@/*": ["./*"]
     },
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx",
     "./vitest.setup.ts"

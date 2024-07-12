@@ -1,7 +1,11 @@
 /// <reference types="vitest" />
 
 import { defineConfig } from 'vitest/config';  // Importing from the correct package
+//import { server } from "./app/mocks/server.js";
 
+//beforeAll(() => server.listen());
+//afterEach(() => server.resetHandlers());
+//afterAll(() => server.close());
 export default defineConfig({
   resolve: {
     alias: {
