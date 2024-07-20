@@ -18,7 +18,7 @@ type ContactPageProps = {
 };
 
 const ContactPage: React.FC<ContactPageProps> = ({emailProp, editProp}) => {
-
+    const baseUrl = "http://localhost:3000";
     //these lines handle getting email prop, either as an arg from dyna or from the url
     const params = useParams();
     let emailFromParams;
@@ -35,7 +35,7 @@ const ContactPage: React.FC<ContactPageProps> = ({emailProp, editProp}) => {
         console.log('Current email:', email); // This will log what email is being used for fetching; useful to debug
         if (email && email !== "%" && email !== "new") {
             const fetchContact = () => {
-                fetch(`/api/contacts/${email}`)
+                fetch(`${baseUrl}/api/contacts/${email}`)
                     .then(response => {
                         if (!response.ok) {
                             throw new Error(`Network response was not ok. Email: ${email}`);
@@ -55,6 +55,7 @@ const ContactPage: React.FC<ContactPageProps> = ({emailProp, editProp}) => {
             return () => clearInterval(intervalId);  // Cleanup on component unmount
         }
     }, [email]); // Make sure this effect runs whenever email changes
+
     /*
   // you'll need these three things to use our redux state, dispatch handle_clearEmail handle_toggleHide
   const dispatch = useDispatch();
