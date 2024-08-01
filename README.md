@@ -8,7 +8,7 @@ Change an existing contact's email phone and name
 
 Primsma DB with Next.js
 
-Docker containerized
+Docker
 
 npm install to add dependencies 
 
