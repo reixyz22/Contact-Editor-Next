@@ -10,7 +10,7 @@ async function main() {
       phone: '987-654-3210',
     },
     {
-      name: 'P X',
+      name: 'P1 Example',
       email: 'PX@example.com',
       phone: '987-654-3210',
     },

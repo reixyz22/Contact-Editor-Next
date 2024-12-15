@@ -3,6 +3,7 @@ import {useParams} from 'next/navigation';
 import React, {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {clearEmail, toggleHide} from '../../store';
+import {env} from "std-env";
 
 // Define the Contact type
 type Contact = {
@@ -56,16 +57,16 @@ const ContactPage: React.FC<ContactPageProps> = ({emailProp, editProp}) => {
         }
     }, [email]); // Make sure this effect runs whenever email changes
 
-    /*
+
   // you'll need these three things to use our redux state, dispatch handle_clearEmail handle_toggleHide
-  const dispatch = useDispatch();
+  const dispatch = useDispatch() || undefined;
   const handle_clearEmail = (email: string) => {
       dispatch(clearEmail(email));
   }
   const handle_toggleHide = (email: string) => {
       dispatch(toggleHide(email));
   }
-  */
+
     if (editProp) return <div></div> //if email edit mode don't render this page at all
 
     if (email === "%") return <h1 style={{color: 'darkblue'}}> 📝 </h1> //default screen seen on homepage + after resets
@@ -84,11 +85,11 @@ const ContactPage: React.FC<ContactPageProps> = ({emailProp, editProp}) => {
             <p><strong>Name:</strong> {contact.name}</p>
             <p><strong>Email:</strong> {contact.email}</p>
             <p><strong>Phone:</strong> {contact.phone}</p>
+            <button onClick={() => handle_clearEmail(contact.email)}>📓 Reset</button>
+            <button onClick={() => handle_toggleHide(contact.email)}>🖋 Edit</button>
         </div>
     )
 };
 
-//<button onClick={() => handle_clearEmail(contact.email)}>📓 Reset</button>
-//<button onClick={() => handle_toggleHide(contact.email)}>🖋 Edit</button>
 
 export default ContactPage;

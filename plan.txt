@@ -1,0 +1,26 @@
+login, provide postgres database url
+	instructions on how to get your postgress database url, tested on libarary computer{
+		rm -rf node_modules		
+		npm install
+		prisma generate
+		npx prisma migrate deploy
+	}
+arr email = {"0","0","0","0"}
+
+instead of contacts have
+/#{email1} + x button on click 0 
+/#{email2}
+/#{email3}
+/#{email4}
+
+on click for email
+	if == 0
+		set clicked
+
+
+
+EDIT swap edited in on click button
+	swap editedText in
+email/DELETE on click + on click + x button clicked
+	delete
+
