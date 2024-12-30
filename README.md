@@ -2,22 +2,25 @@
 
 # Features:
 
-➕ Add a new contact
+➕ Add a new contact.
 
-📝 Edit an existing contact's email phone and name
+📝 Edit an existing contact's email, phone, and/or name.
 
-❌ Delete a contact
+👩‍🔬 Prisma DB back end with Next.js frontend.
 
-👩‍🔬 Prisma DB back end with Next.js frontend
+# Demo Video
 
-# [Demo Video](https://youtube.com/watch?v=dELqM9fA-ks)
-
+https://github.com/user-attachments/assets/a88e3a71-cc62-4aff-8a39-bb8fc11cdfec
 
 # Steps to run
 
 npm install to add dependencies
 
 npm dev start to launch the application
+
+
+
+
 
 Configure PostgreSQL database through Prisma config
 
